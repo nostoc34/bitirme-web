@@ -1,7 +1,5 @@
 const styles = {
     container: {
-        position: "absolute",
-        top: 0,
         width: "100%",
         background: "#FF7A00",
         color: "#FFF",

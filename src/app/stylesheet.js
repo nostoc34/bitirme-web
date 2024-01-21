@@ -21,22 +21,6 @@ const styles = {
                 border: "none",
                 outline: "none !important"
             },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         
         // "&::-webkit-scrollbar": {
         //     width: "8px",

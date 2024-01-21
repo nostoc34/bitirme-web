@@ -59,7 +59,8 @@ const styles = {
             padding: "10px",
             borderRadius: "25px",
             background: "#0D3396",
-            width: "300px"
+            width: "300px",
+            cursor: "pointer"
         },
         '& span': {
             cursor: "pointer",
