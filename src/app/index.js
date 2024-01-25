@@ -6,6 +6,7 @@ import GlobalStateProvider from './context';
 import Login from "./screens/auth/login";
 import Register from "./screens/auth/register";
 import MyProfile from "./screens/main/myProfile";
+import Profile from "./screens/main/profile";
 
 function App({ classes }) {
 
@@ -16,6 +17,7 @@ function App({ classes }) {
 					<Route path="/" element={<Login />} />
 					<Route path="/register" element={<Register />} />
 					<Route path="/my-profile" element={<MyProfile />} />
+					<Route path="/profile/:userName" element={<Profile />} />
 				</Routes>
 			</BrowserRouter>
 	);

@@ -11,66 +11,80 @@ import Modal from "../../../components/modal";
 import Post from "../../../components/post";
 import NoPost from "../../../components/noPost";
 import { client } from "../../../../service";
-import getOwnProfileData from "../../../../service/query/getOwnProfile";
-import getOwnPosts from "../../../../service/query/getOwnPosts";
+import getProfile from "../../../../service/query/getProfile";
+import getProfilePosts from "../../../../service/query/getProfilePosts";
 import getPost from "../../../../service/query/getPost";
-import editProfile from "../../../../service/mutation/editProfile";
 import newComment from "../../../../service/mutation/newComment";
 import newLike from "../../../../service/mutation/newLike";
+import handleFollow from "../../../../service/mutation/handleFollow";
 import { Icon } from '@iconify/react';
-import Switch from "react-switch";
+import { useParams } from "react-router-dom";
 
-const MyProfile = ({ classes }) => {
+const Profile = ({ classes }) => {
 	const [profileData, setProfileData] = useState([]);
 	const [postData, setPostData] = useState([]);
 	const [specificPost, setSpecificPost] = useState({});
 	const [postModalOpen, setPostModalOpen] = useState(false);
-	const [editModalOpen, setEditModalOpen] = useState(false);
-	const [newUserData, setNewUserData] = useState({
-		isPrivate: profileData?.isPrivate
-	});
 	const [comment, setComment] = useState("");
 	const [commentPostID, setCommentPostID] = useState("");
+    const {userName} = useParams();
+    const [isFriendsWith, setIsFriendWith] = useState("");
+    const [postMode, setPostMode] = useState("");
 
 	const getPostData = () => {
 		client
 			.query({
-				query: getOwnPosts,
+				query: getProfilePosts,
 				context: {
 					headers: {
 						authorization: window.localStorage.getItem("user") ? JSON.parse(window.localStorage.getItem("user")).token : null,
 					},
 				},
-				fetchPolicy: "no-cache"
+				fetchPolicy: "no-cache",
+                variables: {
+                    userName: userName
+                }
 			})
 			.then((res) => {
-				setPostData(res.data.getOwnPosts.data);
+				setPostData(res.data.getProfilePosts.data);
 			})
 			.catch((err) => {
-				console.error("getOwnPosts error:", err);
+				console.error("getProfilePosts error:", err);
 			});
 	};
 
 	const getProfileData = () => {
 		client
 			.query({
-				query: getOwnProfileData,
+				query: getProfile,
 				context: {
 					headers: {
 						authorization: window.localStorage.getItem("user") ? JSON.parse(window.localStorage.getItem("user")).token : null,
 					},
 				},
-				fetchPolicy: "no-cache"
+				fetchPolicy: "no-cache",
+                variables: {
+                    userName: userName
+                }
 			})
 			.then((res) => {
-				setProfileData(res.data.getOwnProfileData.data);
-				setNewUserData({
-					...newUserData,
-					isPrivate: res.data.getOwnProfileData.data.isPrivate
-				});
+                const response = res.data.getProfile.data;
+                setProfileData(response);
+                if(response.followStatus === "approved") {
+                    setIsFriendWith("approved");
+                } else if(response.followStatus === "waiting") {
+                    setIsFriendWith("waiting");
+                } else {
+                    setIsFriendWith("");
+                }
+                if(res.data.getProfile.code === 205) {
+                    setPostMode("private");
+                } else if(res.data.getProfile.code === 205) {
+                    setPostMode("unloggedPrivate");
+                }
 			})
 			.catch((err) => {
-				console.error("getOwnProfileData error:", JSON.stringify(err));
+				console.error("getProfile error:", JSON.stringify(err));
 			});
 	};
 
@@ -94,30 +108,6 @@ const MyProfile = ({ classes }) => {
 			.catch((err) => {
 				console.error("getPost error:", JSON.stringify(err));
 			});
-	};
-
-	const updateProfile = () => {
-		client
-			.mutate({
-				mutation: editProfile,
-				context: {
-					headers: {
-						authorization: window.localStorage.getItem("user") ? JSON.parse(window.localStorage.getItem("user")).token : null,
-					},
-				},
-				fetchPolicy: "no-cache",
-				variables: newUserData
-			})
-			.then((res) => {
-				const response = res.data.editProfile
-				if(response.code === 200) {
-					getProfileData();
-					console.log("başarılı")
-				}
-			})
-			.catch((err) => {
-				console.error("editProfile error:", JSON.stringify(err));
-			})
 	};
 
 	const handleNewComment = () => {
@@ -172,18 +162,37 @@ const MyProfile = ({ classes }) => {
 			.catch((err) => {
 				console.error("newLike error:", JSON.stringify(err));
 			})
-	}
+	};
 
-	const handlePrivate = () => {
-		setNewUserData({
-			...newUserData,
-			isPrivate: !newUserData.isPrivate
-		});
-	}
+    const handleFollowRequest = () => {
+        client
+			.mutate({
+				mutation: handleFollow,
+				context: {
+					headers: {
+						authorization: window.localStorage.getItem("user") ? JSON.parse(window.localStorage.getItem("user")).token : null,
+					},
+				},
+				fetchPolicy: "no-cache",
+				variables: {
+					toUser: profileData?.id
+				}
+			})
+			.then((res) => {
+				const response = res.data.handleFollow;
+				if(response.code === 200) {
+					getProfileData();
+                    setIsFriendWith(!isFriendsWith);
+				}
+			})
+			.catch((err) => {
+				console.error("handleFollow error:", JSON.stringify(err));
+			})
+    };
 
 	const commentOnChange = (e) => {
 		setComment(e.target.value);
-	}
+	};
 
 
 	useEffect(() => {
@@ -195,12 +204,17 @@ const MyProfile = ({ classes }) => {
 		<div>
 			<Navbar />
 			<div className={classes.container}>
-				<ProfileHeader isMyProfile={true} isFriendsWith={false} data={profileData} handleEdit={() => setEditModalOpen(true)} />
+				<ProfileHeader
+                    isMyProfile={false}
+                    isFriendsWith={isFriendsWith}
+                    data={profileData}
+                    handleFollow={handleFollowRequest}
+                    />
 				<div className={classes.postSection}>
 				
 					{
-						postData.length === 0 ?
-						<NoPost /> :
+						postData.length === 0 || isFriendsWith !== "approved" ?
+						<NoPost mode={postMode}/> :
 						postData.map((item, index) => {
 							return(
 								<ProfilePost
@@ -243,98 +257,9 @@ const MyProfile = ({ classes }) => {
 					}}
 				/>
 			}
-			{
-				editModalOpen &&
-				<Modal
-					index={1}
-					children={
-						<div className={classes.editContainer}>
-							<div className={classes.editLeftSection}>
-								<div className={classes.editPics}>
-									<div className={classes.picContainer}>
-										<img src={profileData?.profilePhoto} alt="pp" />
-									</div>
-									<div>
-										<Icon icon="ion:camera" />
-									</div>
-								</div>
-								<div className={classes.editButtons}>
-									<div>
-										<button>E-post Adresini Değiştir</button>
-									</div>
-									<div>
-										<button>Şifreni Değiştir</button>
-									</div>
-								</div>
-							</div>
-							<div className={classes.editRightSection}>
-								<div className={classes.switch}>
-									Gizli Hesap
-									<Switch
-										checked={newUserData.isPrivate}
-										onChange={handlePrivate}
-										onColor="#FFBC7E"
-										onHandleColor="#FF7A00"
-										handleDiameter={30}
-										uncheckedIcon={false}
-										checkedIcon={false}
-										boxShadow="0px 1px 5px rgba(255, 122, 0, 1)"
-										activeBoxShadow="0px 0px 1px 10px rgba(255, 122, 0, 1)"
-										height={20}
-										width={48}
-										className="react-switch"
-										id="material-switch"
-									/>
-								</div>
-								<div>
-									<input
-										type="text"
-										placeholder={profileData?.userName}
-										onChange={(e) => {
-											setNewUserData({
-												...newUserData,
-												userName: e.target.value
-											})
-										}}
-										/>
-								</div>
-								<div>
-									<input
-										type="text"
-										placeholder={profileData?.fullName}
-										onChange={(e) => {
-											setNewUserData({
-												...newUserData,
-												fullName: e.target.value
-											})
-										}}
-										/>
-								</div>
-								<div>
-									<textarea
-										type="text"
-										placeholder={profileData?.about}
-										onChange={(e) => {
-											setNewUserData({
-												...newUserData,
-												about: e.target.value
-											})
-										}}
-										/>
-								</div>
-								<div>
-									<button onClick={updateProfile}>Kaydet</button>
-								</div>
-							</div>
-						</div>
-					}
-					onClose={() => {
-						setEditModalOpen(false);
-					}}
-				/>
-			}
+			
 		</div>
 	);
 };
 
-export default injectSheet(styles)(MyProfile);
+export default injectSheet(styles)(Profile);

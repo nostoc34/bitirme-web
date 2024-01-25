@@ -12,10 +12,14 @@ const styles = {
         width: "100%",
         maxWidth: "200px",
         height: "200px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
         marginRight: "10%",
+        overflow: "hidden",
+        borderRadius: "50%",
         '& img': {
             width: "100%",
-            borderRadius: "50%"
         }
     },
     info: {

@@ -3,9 +3,9 @@ import injectSheet from "react-jss";
 import styles from "./stylesheet";
 import { Icon } from "@iconify/react";
 
-const ProfilePost = ({ classes, image, likes, comments, content }) => {
+const ProfilePost = ({ classes, image, likes, comments, content, handleClick }) => {
 	return (
-		<div className={classes.post}>
+		<div className={classes.post} onClick={handleClick}>
 			<img src={image} alt="post" />
 			<div className={classes.info}>
 				<div> {content} </div>

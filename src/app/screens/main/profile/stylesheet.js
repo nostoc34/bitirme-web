@@ -17,6 +17,10 @@ const styles = {
         background: "#FFF",
         padding: "5%",
         borderRadius: "25px",
+        '& img': {
+            width:"200px",
+            borderRadius: "50%"
+        }
     },
     editLeftSection: {
         display: "flex",
@@ -37,18 +41,6 @@ const styles = {
             height: "30px",
             color: "#0D3396",
             cursor: "pointer"
-        }
-    },
-    picContainer: {
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        overflow: "hidden",
-        width:"200px",
-        height: "200px",
-        borderRadius: "50%",
-        '& img': {
-            width: "100%"
         }
     },
     editButtons: {

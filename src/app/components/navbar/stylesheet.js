@@ -42,10 +42,17 @@ const styles = {
                 }
             }
         },
+    },
+    profilePic: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        overflow: "hidden",
+        borderRadius: "50px",
+        height: "50px",
+        width: "50px",
         '& img': {
-            height: "50px",
-            width: "50px",
-            borderRadius: "50px"
+            width: "100%",
         }
     }
 

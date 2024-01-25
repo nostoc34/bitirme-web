@@ -23,7 +23,9 @@ const Navbar = ({classes}) => {
                                 <Notification />
                             </div>
                             <div className={classes.menuItem}>
-                                <img src={window.localStorage.getItem("user") ? JSON.parse(window.localStorage.getItem("user")).profilePhoto : null} alt="profile_picture" />
+                                <div className={classes.profilePic}>
+                                    <img src={window.localStorage.getItem("user") ? JSON.parse(window.localStorage.getItem("user")).profilePhoto : null} alt="profile_picture" />
+                                </div>
                             </div>
                         </div>
                     </div>

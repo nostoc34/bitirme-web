@@ -6,7 +6,7 @@ import Unfollow from "../../../assets/unfollow";
 import Message from "../../../assets/message";
 import Edit from "../../../assets/edit";
 
-const ProfileHeader = ({ classes, isMyProfile, isFriendsWith, data }) => {
+const ProfileHeader = ({ classes, isMyProfile, isFriendsWith, data, handleEdit, handleFollow }) => {
 
 	return (
 		<div
@@ -24,21 +24,21 @@ const ProfileHeader = ({ classes, isMyProfile, isFriendsWith, data }) => {
 			</div>
 			<div className={classes.follow}>
 				<div>
-					<div>Takipçi</div>
-					<div> {data.followers} </div>
-				</div>
-				<div>
 					<div>Takip</div>
 					<div> {data.follows} </div>
 				</div>
+				<div>
+					<div>Takipçi</div>
+					<div> {data.followers} </div>
+				</div>
 			</div>
 			{isMyProfile ? (
-				<div className={classes.editProfile}>
+				<div className={classes.editProfile} onClick={handleEdit}>
 					<Edit />
 				</div>
 			) : (
 				<div className={classes.relations}>
-					<div>{isFriendsWith ? <Unfollow /> : <Follow />}</div>
+					<div onClick={handleFollow}>{isFriendsWith === "" ? <Follow /> : <Unfollow />}</div>
 					<div>
 						<Message />
 					</div>

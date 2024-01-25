@@ -4,7 +4,7 @@ export default gql`
 	mutation (
 		$postID: String!
 	) {
-		newComment(
+		newLike(
 			postID: $postID
 		) {
 			message
@@ -14,6 +14,8 @@ export default gql`
 				userID
                 postID
                 createdAt
+				userName
+				profilePhoto
 			}
 		}
 	}
