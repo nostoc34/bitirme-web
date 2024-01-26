@@ -8,6 +8,7 @@ const styles = {
             padding: 0,
             fontFamily: "'Inter', 'sans-serif'",
             boxSizing: "border-box !important",
+            background: "#EBEBEB",
             },
             input: {
                 border: "none",

@@ -97,6 +97,7 @@ const MyProfile = ({ classes }) => {
 	};
 
 	const updateProfile = () => {
+		console.log(newUserData);
 		client
 			.mutate({
 				mutation: editProfile,
@@ -177,7 +178,7 @@ const MyProfile = ({ classes }) => {
 	const handlePrivate = () => {
 		setNewUserData({
 			...newUserData,
-			isPrivate: !newUserData.isPrivate
+			isPrivate: !(newUserData.isPrivate)
 		});
 	}
 

@@ -7,6 +7,7 @@ import Login from "./screens/auth/login";
 import Register from "./screens/auth/register";
 import MyProfile from "./screens/main/myProfile";
 import Profile from "./screens/main/profile";
+import Home from "./screens/main/home";
 
 function App({ classes }) {
 
@@ -16,6 +17,7 @@ function App({ classes }) {
 					{/* <Route path="/*" element={<NotFound />} /> */}
 					<Route path="/" element={<Login />} />
 					<Route path="/register" element={<Register />} />
+					<Route path="/home" element={<Home />} />
 					<Route path="/my-profile" element={<MyProfile />} />
 					<Route path="/profile/:userName" element={<Profile />} />
 				</Routes>

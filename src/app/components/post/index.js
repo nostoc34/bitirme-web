@@ -3,19 +3,24 @@ import injectSheet from "react-jss";
 import styles from "./stylesheet";
 import { Icon } from "@iconify/react";
 
-const Post = ({ classes, description, image, comments, likeCount, commentCount, isHeader, handleLike, handleNewComment, commentOnChange, comment }) => {
+const Post = ({ classes, description, image, comments, likeCount, commentCount, isHeader, handleLike, handleNewComment, commentOnChange, comment, ppImg, userName, navigateProfile }) => {
 	return (
 		<div className={classes.container}>
             {
                 isHeader &&
-                <div className={classes.header}>
-                    Header
+                <div className={classes.header} onClick={navigateProfile}>
+                    <div className={classes.picContainer}>
+                        <img src={ppImg} alt="pp" />
+                    </div>
+                    <div>
+                        {userName}
+                    </div>
                 </div>
             }
 			
-			<div className={classes.post}>
+			<div className={classes.post} style={{borderRadius: isHeader ? "0 0 25px 25px" : "25px"}}>
                 <div className={classes.image}>
-                    <img src={image} alt="post" />
+                    <img src={image} alt="post" style={{borderRadius: isHeader ? "0 0 0 25px" : "25px 0 0 25px"}}/>
                 </div>
                 <div className={classes.info}>
                     <div className={classes.description}>

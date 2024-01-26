@@ -3,7 +3,7 @@ const styles = {
         display: "flex",
         flexDirection: "column",
         width: "100%",
-        padding: "3% 15%"
+        padding: "8% 15%"
     },
     postSection: {
         display: "flex",

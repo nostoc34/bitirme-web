@@ -3,8 +3,32 @@ const styles = {
         display: "flex",
         background: "#FFF",
         width: "1200px",
-        height: "500px",
-        borderRadius: "25px"
+        height: "500px"
+    },
+    header: {
+        width: "100%",
+        background: "#0D3396",
+        padding: "15px 30px",
+        display: "flex",
+        alignItems: "center",
+        gap: "20px",
+        color: "#FFF",
+        fontSize: "18px",
+        fontWeight: "600",
+        borderRadius: "25px 25px 0 0",
+        cursor: "pointer"
+    },
+    picContainer: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        overflow: "hidden",
+        width:"50px",
+        height: "50px",
+        borderRadius: "50%",
+        '& img': {
+            width: "100%"
+        }
     },
     image: {
         display: "flex",
@@ -13,8 +37,7 @@ const styles = {
         '& img': {
             width: "100%",
             minWidth: "700px",
-            height: "100%",
-            borderRadius: "25px 0 0 25px"
+            height: "100%"
         }
     },
     info: {

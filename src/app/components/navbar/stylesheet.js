@@ -8,11 +8,15 @@ const styles = {
         padding: "25px 30px",
         display: "flex",
         justifyContent: "space-between",
-        alignItems: "center"
+        alignItems: "center",
+        position: "fixed",
+        top: "0",
+        zIndex: 100
     },
     logo: {
         fontFamily: "'Irish Grover', 'system-ui'",
-        fontSize: "48px"
+        fontSize: "48px",
+        cursor: "pointer"
     },
     menu: {
         display: "flex",
@@ -34,6 +38,10 @@ const styles = {
         justifyContent: "center",
         alignItems: "center",
         cursor: "pointer",
+        '& svg': {
+            width: "30px",
+            height: "30px"
+        },
         '&:hover' : {
             color: "#0D3396",
             '& svg': {

@@ -47,7 +47,7 @@ const Login = ({ classes }) => {
 						profilePhoto: res.data.profilePhoto,
 						isLogged: true
 					}));
-					window.location.href = '/my-profile';
+					window.location.href = '/home';
 				} else {
 					setResMessage(res.message);
 				}
