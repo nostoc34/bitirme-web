@@ -23,6 +23,7 @@ const Home = ({ classes }) => {
 	const [tempPostImg, setTempPostImg] = useState();
 	const [postDesc, setPostDesc] = useState("");
 	const [suggestedFriends, setSuggestedFriends] = useState([]);
+	const [postShared, setPostShared] = useState(false);
 
 	const theUser = JSON.parse(window.localStorage.getItem("user"));
 
@@ -277,6 +278,18 @@ const Home = ({ classes }) => {
 							setModalOpen(false);
 						}}
 						children={
+							postShared ? 
+							<div
+								className={classes.newPostModal}
+									onClick={(e) => {
+										e.stopPropagation();
+									}}
+							>	
+								<span className={classes.successPost}>
+									Gönderi paylaşıldı!
+								</span>
+								<Icon icon="ep:success-filled" width="64" height="64" />
+							</div> :
 							<div
 								className={classes.newPostModal}
 								onClick={(e) => {
@@ -330,7 +343,11 @@ const Home = ({ classes }) => {
 									className={classes.shareBtn}
 									onClick={() => {
 										shareNewPost();
-										setModalOpen(false);
+										setPostShared(true);
+										setTimeout(() => {
+											setModalOpen(false);
+											setPostShared(false);
+										}, 2000);
 									}}
 								>
 									Paylaş

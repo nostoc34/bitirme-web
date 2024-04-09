@@ -115,7 +115,15 @@ const styles = {
         alignItems: "center",
         padding: "7%",
         gap: "20px",
-        borderRadius: "25px"
+        borderRadius: "25px",
+        '& svg': {
+            color: "#0D3396"
+        }
+    },
+    successPost: {
+        fontSize: "48px",
+        fontWeight: "900",
+        color: "#0D3396"
     },
     newPostHeader: {
         textAlign: "center",
@@ -139,7 +147,8 @@ const styles = {
         background: "#0D3396",
         color: "#FFF",
         borderRadius:"25px",
-        textAlign: "center"
+        textAlign: "center",
+        cursor: "pointer"
     },
     emptyHome: {
         width: "1200px",
