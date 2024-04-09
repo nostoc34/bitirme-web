@@ -62,6 +62,44 @@ const styles = {
         '& img': {
             width: "100%",
         }
+    },
+    searchContainer: {
+        position: "relative",
+        width: "250px",
+        '& input': {
+            width: "100%",
+            padding: "10px",
+            borderBottom: "1px solid #0D3396",
+            borderRadius: "25px 25px 0 0"
+        }
+    },
+    srcIcon: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        position: "absolute",
+        top: "50%",
+        right: "15px",
+        transform: "translate(0, -50%)",
+        '& svg': {
+            color: "#0D3396"
+        }
+    },
+    results: {
+        position: "absolute",
+        width: "250px",
+        background: "#FFF",
+        color: "#0D3396",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: "5px",
+        '& div': {
+            borderBottom: "1px solid #0D3396",
+            width: "100%",
+            cursor: "pointer",
+            padding: "5px"
+        }
     }
 
 };

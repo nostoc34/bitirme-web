@@ -17,7 +17,6 @@ import getPost from "../../../../service/query/getPost";
 import newComment from "../../../../service/mutation/newComment";
 import newLike from "../../../../service/mutation/newLike";
 import handleFollow from "../../../../service/mutation/handleFollow";
-import { Icon } from '@iconify/react';
 import { useParams } from "react-router-dom";
 
 const Profile = ({ classes }) => {
@@ -52,7 +51,6 @@ const Profile = ({ classes }) => {
 				console.error("getProfilePosts error:", err);
 			});
 	};
-
 	const getProfileData = () => {
 		client
 			.query({
@@ -70,18 +68,17 @@ const Profile = ({ classes }) => {
 			.then((res) => {
                 const response = res.data.getProfile.data;
                 setProfileData(response);
-                if(response.followStatus === "approved") {
-                    setIsFriendWith("approved");
-                } else if(response.followStatus === "waiting") {
-                    setIsFriendWith("waiting");
-                } else {
-                    setIsFriendWith("");
-                }
-                if(res.data.getProfile.code === 205) {
-                    setPostMode("private");
-                } else if(res.data.getProfile.code === 205) {
-                    setPostMode("unloggedPrivate");
-                }
+				if(res.data.getProfile.code === 205) {
+					if(response.followStatus === "waiting") {
+						setIsFriendWith("waiting");
+					}
+					setPostMode("private");
+				}
+				if(res.data.getProfile.code === 206) {
+					setIsFriendWith(response.followStatus)
+				} else {
+					setIsFriendWith(response.followStatus)
+				}
 			})
 			.catch((err) => {
 				console.error("getProfile error:", JSON.stringify(err));
@@ -194,6 +191,37 @@ const Profile = ({ classes }) => {
 		setComment(e.target.value);
 	};
 
+	const renderPosts = () => {
+		if(postMode === "private") {
+			console.log("1");
+			return <NoPost mode={"private"}/>;
+		} else {
+			if(postData && postData.length) {
+				console.log("2");
+				return postData.map((item, index) => {
+					console.log("hop");
+					return(
+						<ProfilePost
+							key={index}
+							image={item.image}
+							likes={item.likes}
+							comments={item.comments.length}
+							content={item.content}
+							handleClick={() => {
+								setPostModalOpen(true);
+								getSpecificPost(item.id);
+								setCommentPostID(item.id);
+							}}
+						/>
+					)
+				})
+			} else {
+				console.log("3");
+				return <NoPost />;
+			}
+		}
+	}
+
 
 	useEffect(() => {
 		getProfileData();
@@ -211,26 +239,8 @@ const Profile = ({ classes }) => {
                     handleFollow={handleFollowRequest}
                     />
 				<div className={classes.postSection}>
-				
-					{
-						postData.length === 0 || isFriendsWith !== "approved" ?
-						<NoPost mode={postMode}/> :
-						postData.map((item, index) => {
-							return(
-								<ProfilePost
-									key={index}
-									image={item.image}
-									likes={item.likes}
-									comments={item.comments.length}
-									content={item.content}
-									handleClick={() => {
-										setPostModalOpen(true);
-										getSpecificPost(item.id);
-										setCommentPostID(item.id);
-									}}
-									/>
-							)
-						})
+					{	
+						renderPosts()
 					}
 				</div>
 			</div>

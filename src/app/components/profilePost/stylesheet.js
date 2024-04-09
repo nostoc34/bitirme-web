@@ -29,7 +29,7 @@ const styles = {
         color: "#FF7A00",
         fontWeight: "600",
         opacity: "0",
-        transition: "0.3s linear all",
+        transition: "0.3s linear all"
     },
     infoItem: {
         display: "flex",
@@ -37,7 +37,6 @@ const styles = {
         alignItems: "center",
         gap: "5px"
     }
-
 };
 
 export default styles;

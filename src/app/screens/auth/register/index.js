@@ -29,7 +29,7 @@ const Register = ({ classes }) => {
 				return res.json();
 			})
 			.then((res) => {
-				console.log(res);
+				window.location.href = "/";
 			})
 			.catch((err) => {
 				console.error("err:", err);
@@ -46,6 +46,11 @@ const Register = ({ classes }) => {
 						onChange={(e) => {
 							setUserName(e.target.value);
 						}}
+						onKeyDown={(e) => {
+							if(e.key === "Enter") {
+								signup();
+							}
+                    	}}
 					/>
 					<input
 						type="text"
@@ -53,6 +58,11 @@ const Register = ({ classes }) => {
 						onChange={(e) => {
 							setFullName(e.target.value);
 						}}
+						onKeyDown={(e) => {
+							if(e.key === "Enter") {
+								signup();
+							}
+                    	}}
 					/>
 					<input
 						type="text"
@@ -60,10 +70,20 @@ const Register = ({ classes }) => {
 						onChange={(e) => {
 							setEmail(e.target.value);
 						}}
+						onKeyDown={(e) => {
+							if(e.key === "Enter") {
+								signup();
+							}
+                    	}}
 					/>
 					<input
 						type="password"
 						placeholder="Şifre"
+						onKeyDown={(e) => {
+							if(e.key === "Enter") {
+								signup();
+							}
+                    	}}
 						onChange={(e) => {
 							setPassword(e.target.value);
 						}}

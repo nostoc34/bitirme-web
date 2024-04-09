@@ -38,7 +38,7 @@ const ProfileHeader = ({ classes, isMyProfile, isFriendsWith, data, handleEdit, 
 				</div>
 			) : (
 				<div className={classes.relations}>
-					<div onClick={handleFollow}>{isFriendsWith === "" ? <Follow /> : <Unfollow />}</div>
+					<div onClick={handleFollow}>{isFriendsWith === "approved" || isFriendsWith === "waiting" ? <Unfollow /> : <Follow />}</div>
 					<div>
 						<Message />
 					</div>

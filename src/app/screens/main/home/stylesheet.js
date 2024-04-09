@@ -23,7 +23,8 @@ const styles = {
         flexDirection: "column",
         flex: 1,
         alignItems: "center",
-        gap: "50px"
+        gap: "50px",
+        width: "30%"
     },
     newPost: {
         width: "100%",
@@ -63,6 +64,7 @@ const styles = {
         marginBottom: "30px"
     },
     slider: {
+        width: "100%",
         height: "100%",
         '& div': {
             height: "100%"
@@ -102,7 +104,8 @@ const styles = {
         padding: "10px 20px",
         width: "150px",
         borderRadius: "25px",
-        cursor: "pointer"
+        cursor: "pointer",
+        marginTop: "30px"
     },
     newPostModal: {
         background: "#FFF",

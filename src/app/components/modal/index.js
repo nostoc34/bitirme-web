@@ -15,6 +15,7 @@ const Modal = ({
             style={{
                 zIndex: 500+index,
             }}
+            onClick={onClose}
         >
             <div
                 onClick={onClose} className={classes.closeIcon}><Icon icon="mdi:close-box"

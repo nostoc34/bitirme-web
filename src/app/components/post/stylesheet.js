@@ -106,7 +106,8 @@ const styles = {
         flexDirection: "column",
         justifyContent: "space-between",
         alignItems: "center",
-        padding: "0 7%"
+        padding: "0 7%",
+        position: "relative"
     },
     commentsSection: {
         width: "100%",
@@ -114,14 +115,17 @@ const styles = {
         overflowY: "auto",
         display: "flex",
         flexDirection: "column",
-        gap: "10px"
+        gap: "10px",
+        paddingTop: "5px"
     },
     comment: {
         width: "100%",
         padding: "5px 7px",
         fontSize: "14px",
         border: "1px solid #FF7A00",
-        borderRadius: "25px"
+        borderRadius: "25px",
+        display: "flex",
+
     },
     likeBtn: {
         paddingBottom: "10px",
@@ -153,6 +157,56 @@ const styles = {
         '& img': {
             width: "100%",
         }
+    },
+    deleteIcon: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        position: "relative",
+        '& svg': {
+            width: "15px",
+            height: "15px",
+            color: "#0D3396",
+            cursor: "pointer"
+        }
+    },
+    sure: {
+        background: "#0D3396",
+        color: "#FFF",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        textAlign: "center",
+        padding: "10px",
+        position: "absolute",
+        width: "100px",
+        right: "20px",
+        borderRadius: "10px"
+    },
+    sureAnswers: {
+        display: "flex",
+        justifyContent: "space-between",
+        '& div': {
+            cursor: "pointer"
+        }
+    },
+    yes: {
+        '&:hover': {
+            color: "#FF7A00"
+        }
+    },
+    no: {
+        '&:hover': {
+            color: "#FF7A00"
+        }
+    },
+    delIcon: {
+        position: "absolute",
+        right: "5%",
+        bottom: "5%",
+        color: "#0D3396",
+        cursor: "pointer"
     }
 };
 

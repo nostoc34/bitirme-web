@@ -1,7 +1,4 @@
-import React, {
-	useEffect,
-	useState
-} from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../../components/navbar";
 import injectSheet from "react-jss";
 import styles from "./stylesheet";
@@ -17,7 +14,7 @@ import getPost from "../../../../service/query/getPost";
 import editProfile from "../../../../service/mutation/editProfile";
 import newComment from "../../../../service/mutation/newComment";
 import newLike from "../../../../service/mutation/newLike";
-import { Icon } from '@iconify/react';
+import { Icon } from "@iconify/react";
 import Switch from "react-switch";
 
 const MyProfile = ({ classes }) => {
@@ -27,7 +24,7 @@ const MyProfile = ({ classes }) => {
 	const [postModalOpen, setPostModalOpen] = useState(false);
 	const [editModalOpen, setEditModalOpen] = useState(false);
 	const [newUserData, setNewUserData] = useState({
-		isPrivate: profileData?.isPrivate
+		isPrivate: profileData?.isPrivate,
 	});
 	const [comment, setComment] = useState("");
 	const [commentPostID, setCommentPostID] = useState("");
@@ -38,10 +35,13 @@ const MyProfile = ({ classes }) => {
 				query: getOwnPosts,
 				context: {
 					headers: {
-						authorization: window.localStorage.getItem("user") ? JSON.parse(window.localStorage.getItem("user")).token : null,
+						authorization: window.localStorage.getItem("user")
+							? JSON.parse(window.localStorage.getItem("user"))
+									.token
+							: null,
 					},
 				},
-				fetchPolicy: "no-cache"
+				fetchPolicy: "no-cache",
 			})
 			.then((res) => {
 				setPostData(res.data.getOwnPosts.data);
@@ -57,16 +57,19 @@ const MyProfile = ({ classes }) => {
 				query: getOwnProfileData,
 				context: {
 					headers: {
-						authorization: window.localStorage.getItem("user") ? JSON.parse(window.localStorage.getItem("user")).token : null,
+						authorization: window.localStorage.getItem("user")
+							? JSON.parse(window.localStorage.getItem("user"))
+									.token
+							: null,
 					},
 				},
-				fetchPolicy: "no-cache"
+				fetchPolicy: "no-cache",
 			})
 			.then((res) => {
 				setProfileData(res.data.getOwnProfileData.data);
 				setNewUserData({
 					...newUserData,
-					isPrivate: res.data.getOwnProfileData.data.isPrivate
+					isPrivate: res.data.getOwnProfileData.data.isPrivate,
 				});
 			})
 			.catch((err) => {
@@ -80,13 +83,16 @@ const MyProfile = ({ classes }) => {
 				query: getPost,
 				context: {
 					headers: {
-						authorization: window.localStorage.getItem("user") ? JSON.parse(window.localStorage.getItem("user")).token : null,
+						authorization: window.localStorage.getItem("user")
+							? JSON.parse(window.localStorage.getItem("user"))
+									.token
+							: null,
 					},
 				},
 				fetchPolicy: "no-cache",
 				variables: {
-					postID: pID
-				}
+					postID: pID,
+				},
 			})
 			.then((res) => {
 				setSpecificPost(res.data.getPost.data);
@@ -103,22 +109,25 @@ const MyProfile = ({ classes }) => {
 				mutation: editProfile,
 				context: {
 					headers: {
-						authorization: window.localStorage.getItem("user") ? JSON.parse(window.localStorage.getItem("user")).token : null,
+						authorization: window.localStorage.getItem("user")
+							? JSON.parse(window.localStorage.getItem("user"))
+									.token
+							: null,
 					},
 				},
 				fetchPolicy: "no-cache",
-				variables: newUserData
+				variables: newUserData,
 			})
 			.then((res) => {
-				const response = res.data.editProfile
-				if(response.code === 200) {
+				const response = res.data.editProfile;
+				if (response.code === 200) {
 					getProfileData();
-					console.log("başarılı")
+					console.log("başarılı");
 				}
 			})
 			.catch((err) => {
 				console.error("editProfile error:", JSON.stringify(err));
-			})
+			});
 	};
 
 	const handleNewComment = () => {
@@ -127,18 +136,21 @@ const MyProfile = ({ classes }) => {
 				mutation: newComment,
 				context: {
 					headers: {
-						authorization: window.localStorage.getItem("user") ? JSON.parse(window.localStorage.getItem("user")).token : null,
+						authorization: window.localStorage.getItem("user")
+							? JSON.parse(window.localStorage.getItem("user"))
+									.token
+							: null,
 					},
 				},
 				fetchPolicy: "no-cache",
 				variables: {
 					comment: comment,
-					postID: commentPostID
-				}
+					postID: commentPostID,
+				},
 			})
 			.then((res) => {
-				const response = res.data.newComment
-				if(response.code === 200) {
+				const response = res.data.newComment;
+				if (response.code === 200) {
 					getSpecificPost(commentPostID);
 					getPostData();
 					setComment("");
@@ -146,7 +158,7 @@ const MyProfile = ({ classes }) => {
 			})
 			.catch((err) => {
 				console.error("newComment error:", JSON.stringify(err));
-			})
+			});
 	};
 
 	const handleLike = () => {
@@ -155,37 +167,39 @@ const MyProfile = ({ classes }) => {
 				mutation: newLike,
 				context: {
 					headers: {
-						authorization: window.localStorage.getItem("user") ? JSON.parse(window.localStorage.getItem("user")).token : null,
+						authorization: window.localStorage.getItem("user")
+							? JSON.parse(window.localStorage.getItem("user"))
+									.token
+							: null,
 					},
 				},
 				fetchPolicy: "no-cache",
 				variables: {
-					postID: commentPostID
-				}
+					postID: commentPostID,
+				},
 			})
 			.then((res) => {
 				const response = res.data.newLike;
-				if(response.code === 200) {
+				if (response.code === 200) {
 					getSpecificPost(commentPostID);
 					getPostData();
 				}
 			})
 			.catch((err) => {
 				console.error("newLike error:", JSON.stringify(err));
-			})
-	}
+			});
+	};
 
 	const handlePrivate = () => {
 		setNewUserData({
 			...newUserData,
-			isPrivate: !(newUserData.isPrivate)
+			isPrivate: !newUserData.isPrivate,
 		});
-	}
+	};
 
 	const commentOnChange = (e) => {
 		setComment(e.target.value);
-	}
-
+	};
 
 	useEffect(() => {
 		getProfileData();
@@ -196,14 +210,18 @@ const MyProfile = ({ classes }) => {
 		<div>
 			<Navbar />
 			<div className={classes.container}>
-				<ProfileHeader isMyProfile={true} isFriendsWith={false} data={profileData} handleEdit={() => setEditModalOpen(true)} />
+				<ProfileHeader
+					isMyProfile={true}
+					isFriendsWith={false}
+					data={profileData}
+					handleEdit={() => setEditModalOpen(true)}
+				/>
 				<div className={classes.postSection}>
-				
-					{
-						postData.length === 0 ?
-						<NoPost /> :
+					{postData.length === 0 ? (
+						<NoPost />
+					) : (
 						postData.map((item, index) => {
-							return(
+							return (
 								<ProfilePost
 									key={index}
 									image={item.image}
@@ -215,14 +233,13 @@ const MyProfile = ({ classes }) => {
 										getSpecificPost(item.id);
 										setCommentPostID(item.id);
 									}}
-									/>
-							)
+								/>
+							);
 						})
-					}
+					)}
 				</div>
 			</div>
-			{
-				postModalOpen &&
+			{postModalOpen && (
 				<Modal
 					index={1}
 					children={
@@ -237,23 +254,32 @@ const MyProfile = ({ classes }) => {
 							commentOnChange={commentOnChange}
 							comment={comment}
 							handleLike={handleLike}
+							isMyPost={true}
+							postID={specificPost?.id}
 						/>
 					}
 					onClose={() => {
 						setPostModalOpen(false);
 					}}
 				/>
-			}
-			{
-				editModalOpen &&
+			)}
+			{editModalOpen && (
 				<Modal
 					index={1}
 					children={
-						<div className={classes.editContainer}>
+						<div
+							className={classes.editContainer}
+							onClick={(e) => {
+								e.stopPropagation();
+							}}
+						>
 							<div className={classes.editLeftSection}>
 								<div className={classes.editPics}>
 									<div className={classes.picContainer}>
-										<img src={profileData?.profilePhoto} alt="pp" />
+										<img
+											src={profileData?.profilePhoto}
+											alt="pp"
+										/>
 									</div>
 									<div>
 										<Icon icon="ion:camera" />
@@ -261,7 +287,9 @@ const MyProfile = ({ classes }) => {
 								</div>
 								<div className={classes.editButtons}>
 									<div>
-										<button>E-post Adresini Değiştir</button>
+										<button>
+											E-post Adresini Değiştir
+										</button>
 									</div>
 									<div>
 										<button>Şifreni Değiştir</button>
@@ -294,10 +322,10 @@ const MyProfile = ({ classes }) => {
 										onChange={(e) => {
 											setNewUserData({
 												...newUserData,
-												userName: e.target.value
-											})
+												userName: e.target.value,
+											});
 										}}
-										/>
+									/>
 								</div>
 								<div>
 									<input
@@ -306,10 +334,10 @@ const MyProfile = ({ classes }) => {
 										onChange={(e) => {
 											setNewUserData({
 												...newUserData,
-												fullName: e.target.value
-											})
+												fullName: e.target.value,
+											});
 										}}
-										/>
+									/>
 								</div>
 								<div>
 									<textarea
@@ -318,13 +346,15 @@ const MyProfile = ({ classes }) => {
 										onChange={(e) => {
 											setNewUserData({
 												...newUserData,
-												about: e.target.value
-											})
+												about: e.target.value,
+											});
 										}}
-										/>
+									/>
 								</div>
 								<div>
-									<button onClick={updateProfile}>Kaydet</button>
+									<button onClick={updateProfile}>
+										Kaydet
+									</button>
 								</div>
 							</div>
 						</div>
@@ -333,7 +363,7 @@ const MyProfile = ({ classes }) => {
 						setEditModalOpen(false);
 					}}
 				/>
-			}
+			)}
 		</div>
 	);
 };
