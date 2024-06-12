@@ -8,6 +8,7 @@ import Register from "./screens/auth/register";
 import MyProfile from "./screens/main/myProfile";
 import Profile from "./screens/main/profile";
 import Home from "./screens/main/home";
+import Chat from "./screens/main/chat";
 
 function App({ classes }) {
 
@@ -20,6 +21,7 @@ function App({ classes }) {
 					<Route path="/home" element={<Home />} />
 					<Route path="/my-profile" element={<MyProfile />} />
 					<Route path="/profile/:userName" element={<Profile />} />
+					<Route path="/chat" element={<Chat />} />
 				</Routes>
 			</BrowserRouter>
 	);

@@ -83,7 +83,12 @@ const Navbar = ({classes}) => {
                             >
                                 Anasayfa
                             </div>
-                            <div className={classes.menuItem}>Mesajlar</div>
+                            <div
+                                className={classes.menuItem}
+                                onClick={() => {
+                                    window.location.href = "/chat"
+                                }}
+                            >Mesajlar</div>
                         </div>
                         <div className={classes.personalSection}>
                             <div className={classes.menuItem}>
