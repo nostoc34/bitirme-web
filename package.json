@@ -3,15 +3,24 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/client": "3.8.8",
+    "@iconify/react": "4.1.1",
     "@testing-library/jest-dom": "5.14.1",
     "@testing-library/react": "13.0.0",
     "@testing-library/user-event": "13.2.1",
+    "apollo-boost": "0.4.9",
+    "apollo-cache-inmemory": "1.6.6",
+    "apollo-upload-client": "18.0.1",
+    "graphql": "16.8.1",
     "md5": "2.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-jss": "^10.10.0",
+    "react-jss": "10.10.0",
+    "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "6.21.1",
-    "react-scripts": "5.0.1"
+    "react-scripts": "5.0.1",
+    "react-switch": "^7.0.0",
+    "socket.io-client": "^4.7.5"
   },
   "scripts": {
     "start": "react-scripts start",
